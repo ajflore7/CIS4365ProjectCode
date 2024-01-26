@@ -1,0 +1,11 @@
+/*3 Employee Performance Metrics
+--Query: Find the employee who has processed the most number of orders in the last month.--
+--Entities Involved: Employee, Order, Shift--*/;
+
+SELECT E.Fname, E.Lname, COUNT(OrderID) AS OrderCount
+FROM `Order`
+LEFT JOIN Employee as E ON `Order`.EmployeeID = E.EmployeeID
+WHERE Date >= CURDATE() - INTERVAL 31 DAY
+GROUP BY E.EmployeeID
+ORDER BY OrderCount DESC
+LIMIT 1;
