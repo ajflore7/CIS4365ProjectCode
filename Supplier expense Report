@@ -1,0 +1,21 @@
+/*4 Supplier Expense Report
+--Query: Generate a report showing the total expenses for each supplier in the last quarter.
+--Entities Involved: Supplier, Expense*/
+
+SELECT
+    S.SupplierID,
+    S.SupplierName,
+    SUM(E.ExpenseAmount) AS TotalExpenseLastQuarter
+FROM
+    Supplier S
+JOIN
+    Supplier_Invoice SI ON S.SupplierID = SI.SupplierID
+JOIN
+    Expense E ON SI.Supplier_InvoiceID = E.Supplier_InvoiceID -- Corrected field
+WHERE
+    E.ExpenseDate >= DATE_ADD(NOW(), INTERVAL -1 QUARTER) -- Start of last quarter
+    AND E.ExpenseDate < NOW() -- Start of current quarter
+GROUP BY
+    S.SupplierID, S.SupplierName
+ORDER BY
+    TotalExpenseLastQuarter DESC;
