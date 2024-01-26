@@ -1,0 +1,8 @@
+Inventory Shortage Alert
+--Query: List all ingredients that are below the minimum stock level in the inventory.
+--Entities Involved: Ingredient, Inventory*/;
+
+SELECT I.Ingredient_name, Inventory.StockLevel, Inventory.StorelocationID
+FROM Ingredient AS I
+LEFT JOIN Inventory ON I.IngredientID = Inventory.IngredientID
+WHERE Inventory.StockLevel = 'Low';
