@@ -1,0 +1,11 @@
+/*1 Customer Loyalty Analysis
+--Query: Identify customers who have made more than 5 purchases and are not yet enrolled in the Loyalty Program.
+--Entities Involved: Customer, Order, LoyaltyProgram*/;
+
+SELECT c.CustomerID, c.Cust_F_name, c.Cust_L_name, loyalty.Loyalty_name
+FROM Customer AS c
+LEFT JOIN Loyalty AS loyalty ON c.LoyaltyID = loyalty.LoyaltyID
+LEFT JOIN `Order` AS o ON c.CustomerID = o.CustomerID
+WHERE Loyalty_name IS null
+GROUP BY c.CustomerID, c.Cust_L_name, c.Cust_F_name, loyalty.Loyalty_name
+HAVING COUNT(o.CustomerID) > 5;
