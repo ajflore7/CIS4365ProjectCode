@@ -1,0 +1,36 @@
+/*5 Product Review Insights
+--Query: Identify the top 3 products with the highest and lowest average ratings.
+--Entities Involved: Product, Review, Rating*/
+
+(
+  SELECT
+      p.ProductID,
+      p.Product_Name,
+      AVG(rat.Rating_Value) AS avg_rating
+  FROM
+      Product p
+  JOIN
+      Rating rat ON p.ProductID = rat.ProductID
+  GROUP BY
+      p.ProductID, p.Product_Name
+  ORDER BY
+      avg_rating DESC
+  LIMIT 3
+)
+UNION
+(
+  SELECT
+      p.ProductID,
+      p.Product_Name,
+      AVG(rat.Rating_Value) AS avg_rating
+  FROM
+      Product p
+  JOIN
+      Rating rat ON p.ProductID = rat.ProductID
+  GROUP BY
+      p.ProductID, p.Product_Name
+  ORDER BY
+      avg_rating ASC
+  LIMIT 3
+)
+ORDER BY avg_rating DESC;
